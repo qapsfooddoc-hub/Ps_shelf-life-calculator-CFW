@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>คำนวณอายุสินค้า ลูกค้า CFW</title>
+<link rel="manifest" href="manifest-cfw.webmanifest">
+<meta name="theme-color" content="#DC2626">
+<link rel="apple-touch-icon" href="icon-cfw-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Niramit:wght@400;500;600;700&display=swap">
 <style>
   :root{
@@ -760,8 +765,8 @@
   // อายุสินค้า = วันที่ตรวจสอบ − วันที่ผลิต (วัน) ต้องไม่เกิน maxAgeDays
   // baseMonths = อายุพื้นฐานของสินค้า ใช้เติมวันหมดอายุอัตโนมัติ = วันที่ผลิต + baseMonths (เหมือนไฟล์ลูกค้า Makro)
   const PRODUCTS = {
-    ps: { key:'ps', tabLabel:'PS แช่แข็ง', name:'PS แช่แข็ง', maxAgeDays:60, baseMonths:12 },
-    pp: { key:'pp', tabLabel:'สินค้า P&P Marinated', name:'P&P Marinated', maxAgeDays:30, baseMonths:9 }
+    ps: { key:'ps', tabLabel:'PS แช่แข็ง', name:'PS แช่แข็ง', maxAgeDays:90, baseMonths:12 },
+    pp: { key:'pp', tabLabel:'สินค้า P&P Marinated', name:'P&P Marinated', maxAgeDays:60, baseMonths:9 }
   };
 
   function monthsLabel(months){
@@ -1287,6 +1292,16 @@
   updateProductInfo();
   render();
 })();
+</script>
+
+<script>
+// ลงทะเบียน Service Worker เพื่อให้เปิดใช้งาน/คำนวณได้แม้ไม่มีอินเทอร์เน็ต
+// (ทำงานหลังจากเปิดหน้านี้แบบออนไลน์สำเร็จอย่างน้อย 1 ครั้ง)
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw-cfw.js').catch(() => {});
+  });
+}
 </script>
 
 </body>
